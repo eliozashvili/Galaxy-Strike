@@ -4,12 +4,19 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float rotationSpeed;
+
+    [SerializeField] private float xClampRange;
+    [SerializeField] private float yClampRange;
+
+    [SerializeField] private float controlRotationFactor;
 
     private Vector2 _movement;
 
     private void Update()
     {
-        PlayerMovement();
+        ProcessTranslation();
+        ProcessRotation();
     }
 
     public void OnMovement(InputValue value)
@@ -17,11 +24,26 @@ public class Movement : MonoBehaviour
         _movement = value.Get<Vector2>();
     }
 
-    private void PlayerMovement()
+    private void ProcessTranslation()
     {
-        var xOffset = (Time.deltaTime * speed * _movement.x) + transform.localPosition.x;
-        var yOffset = (Time.deltaTime * speed * _movement.y) + transform.localPosition.y;
+        var xOffset = Time.deltaTime * speed * _movement.x;
+        var rawXPos = xOffset + transform.localPosition.x;
+        var xClampPos = Mathf.Clamp(rawXPos, -xClampRange, xClampRange);
 
-        transform.localPosition = new Vector3(xOffset, yOffset, 0f);
+        var yOffset = Time.deltaTime * speed * _movement.y;
+        var rawYPos = yOffset + transform.localPosition.y;
+        var yClampPos = Mathf.Clamp(rawYPos, -yClampRange, yClampRange);
+
+        transform.localPosition = new Vector3(xClampPos, yClampPos, 0f);
+    }
+
+    private void ProcessRotation()
+    {
+        var pitch = -controlRotationFactor * _movement.y;
+        var roll = -controlRotationFactor * _movement.x;
+
+        var targetRotation = Quaternion.Euler(pitch, 0f, roll);
+
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, 1f - Mathf.Exp(-rotationSpeed * Time.deltaTime));
     }
 }
