@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private float speed;
+
+    private Vector2 _movement;
+
+    private void Update()
     {
-        
+        PlayerMovement();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnMovement(InputValue value)
     {
-        
+        _movement = value.Get<Vector2>();
+    }
+
+    private void PlayerMovement()
+    {
+        var xOffset = (Time.deltaTime * speed * _movement.x) + transform.localPosition.x;
+        var yOffset = (Time.deltaTime * speed * _movement.y) + transform.localPosition.y;
+
+        transform.localPosition = new Vector3(xOffset, yOffset, 0f);
     }
 }
