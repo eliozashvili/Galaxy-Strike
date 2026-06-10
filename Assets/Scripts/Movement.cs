@@ -6,8 +6,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
 
-    [SerializeField] private float xClampRange;
-    [SerializeField] private float yClampRange;
+    [SerializeField] private float xRange;
+    [SerializeField] private float yRange;
 
     [SerializeField] private float controlRotationFactor;
 
@@ -28,11 +28,11 @@ public class Movement : MonoBehaviour
     {
         var xOffset = Time.deltaTime * speed * _movement.x;
         var rawXPos = xOffset + transform.localPosition.x;
-        var xClampPos = Mathf.Clamp(rawXPos, -xClampRange, xClampRange);
+        var xClampPos = Mathf.Clamp(rawXPos, -xRange, xRange);
 
         var yOffset = Time.deltaTime * speed * _movement.y;
         var rawYPos = yOffset + transform.localPosition.y;
-        var yClampPos = Mathf.Clamp(rawYPos, -yClampRange, yClampRange);
+        var yClampPos = Mathf.Clamp(rawYPos, -yRange, yRange);
 
         transform.localPosition = new Vector3(xClampPos, yClampPos, 0f);
     }
