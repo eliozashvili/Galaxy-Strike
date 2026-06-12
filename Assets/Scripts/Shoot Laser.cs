@@ -31,6 +31,7 @@ public class ShootLaser : MonoBehaviour
 
         MoveCrosshair(mousePosition);
         MoveTargetPoint(mousePosition);
+        AimLaser();
     }
 
     public void OnShoot(InputValue value)
@@ -42,11 +43,11 @@ public class ShootLaser : MonoBehaviour
 
     private void SetEmission(bool isLmbHeld)
     {
-        foreach (var particle in particles)
+        foreach (var p in particles)
         {
-            if (!particle) continue;
+            if (!p) continue;
 
-            var emission = particle.emission;
+            var emission = p.emission;
 
             if (emission.enabled != isLmbHeld)
                 emission.enabled = isLmbHeld;
@@ -67,6 +68,18 @@ public class ShootLaser : MonoBehaviour
 
         var targetPointPosition = new Vector3(mousePos.x, mousePos.y, targetDistance);
         targetPoint.position = _mainCamera.ScreenToWorldPoint(targetPointPosition);
+    }
+
+    private void AimLaser()
+    {
+        foreach (var p in particles)
+        {
+            // Distance/Direction between Player and targetPoint
+            var shootingDistance = targetPoint.position - transform.position;
+            // Quaternion.LookRotation takes new Vector3 to rotate lasers in targetPoint's direction
+            var laserRotationToTarget = Quaternion.LookRotation(shootingDistance);
+            p.transform.rotation = laserRotationToTarget;
+        }
     }
 
     private void OnValidate()
