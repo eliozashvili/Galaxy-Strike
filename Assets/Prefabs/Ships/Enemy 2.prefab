@@ -82,6 +82,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7088780001461233730, guid: 5a6862edc50ea8748b6e57e287f92600, type: 3}
+      propertyPath: hitPoints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -7088780001461233730, guid: 5a6862edc50ea8748b6e57e287f92600, type: 3}
+      propertyPath: scoreValue
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1201632040446196205, guid: 5a6862edc50ea8748b6e57e287f92600, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
