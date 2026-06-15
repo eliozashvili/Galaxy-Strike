@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -87,7 +86,7 @@ public class ShootLaser : MonoBehaviour
         if (targetDistance < 150f)
             targetDistance = 200f;
 
-        if (particles != null && particles.Length != 0 && Array.TrueForAll(particles, x => !x)) return;
+        if (particles != null && particles.Length != 0 && System.Array.TrueForAll(particles, x => !x)) return;
 
         particles = GetComponentsInChildren<ParticleSystem>();
     }
