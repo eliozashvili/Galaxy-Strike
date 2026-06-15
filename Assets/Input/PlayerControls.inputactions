@@ -12,7 +12,7 @@
                     "id": "51e71a07-84a7-43f6-a5f3-3dca3e11a9a0",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
